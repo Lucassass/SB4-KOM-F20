@@ -19,6 +19,9 @@ import dk.sdu.mmmi.cbse.enemysystem.EnemyControlSystem;
 import dk.sdu.mmmi.cbse.enemysystem.EnemyPlugin;
 import dk.sdu.mmmi.cbse.astroids.AstroidControlSystem;
 import dk.sdu.mmmi.cbse.astroids.AstroidPlugin;
+import dk.sdu.mmmi.cbse.bullet.Bullet;
+import dk.sdu.mmmi.cbse.enemysystem.Enemy;
+import dk.sdu.mmmi.cbse.playersystem.Player;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,7 +100,20 @@ public class Game
 
     private void draw() {
         for (Entity entity : world.getEntities()) {
-            sr.setColor(1, 1, 1, 1);
+            
+            if (entity.getClass().equals(Player.class)){
+                sr.setColor(0, 0, 255, 1);
+            }
+            else if (entity.getClass().equals(Enemy.class)){
+                sr.setColor(255, 0, 0, 1);
+            }
+            else if (entity.getClass().equals(Bullet.class)){
+                sr.setColor(255, 180, 0, 1);
+            }
+            else {
+                sr.setColor(1,1,1,1);
+            }
+            
             sr.begin(ShapeRenderer.ShapeType.Line);
 
             float[] shapex = entity.getShapeX();
