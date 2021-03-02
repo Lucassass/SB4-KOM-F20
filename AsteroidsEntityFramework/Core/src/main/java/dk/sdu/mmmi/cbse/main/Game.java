@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import dk.sdu.mmi.cbse.bullet.BulletControlSystem;
+import dk.sdu.mmi.cbse.bullet.BulletPlugin;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -13,6 +15,10 @@ import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
 import dk.sdu.mmmi.cbse.playersystem.PlayerControlSystem;
 import dk.sdu.mmmi.cbse.playersystem.PlayerPlugin;
+import dk.sdu.mmmi.cbse.enemysystem.EnemyControlSystem;
+import dk.sdu.mmmi.cbse.enemysystem.EnemyPlugin;
+import dk.sdu.mmmi.cbse.astroids.AstroidControlSystem;
+import dk.sdu.mmmi.cbse.astroids.AstroidPlugin;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,10 +50,22 @@ public class Game
         );
 
         IGamePluginService playerPlugin = new PlayerPlugin();
+        IGamePluginService enemyPlugin = new EnemyPlugin();
+        IGamePluginService astroidPlugin = (IGamePluginService) new AstroidPlugin();
+        IGamePluginService bulletPlugin = new BulletPlugin();
 
+        IEntityProcessingService bulletProcess = new BulletControlSystem();
         IEntityProcessingService playerProcess = new PlayerControlSystem();
+        IEntityProcessingService enemyProcess = new EnemyControlSystem();
+        IEntityProcessingService astroidProcess = (IEntityProcessingService) new AstroidControlSystem();
+        entityPlugins.add(bulletPlugin);
         entityPlugins.add(playerPlugin);
+        entityPlugins.add(enemyPlugin);
+        entityPlugins.add(astroidPlugin);
+        entityProcessors.add(bulletProcess);
         entityProcessors.add(playerProcess);
+        entityProcessors.add(enemyProcess);
+        entityProcessors.add(astroidProcess);
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : entityPlugins) {
             iGamePlugin.start(gameData, world);
@@ -79,9 +97,7 @@ public class Game
 
     private void draw() {
         for (Entity entity : world.getEntities()) {
-
             sr.setColor(1, 1, 1, 1);
-
             sr.begin(ShapeRenderer.ShapeType.Line);
 
             float[] shapex = entity.getShapeX();
