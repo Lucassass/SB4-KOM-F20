@@ -80,14 +80,14 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>dk.sdu.mmi.cbse</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>Astroids</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>dk.sdu.mmi.cbse</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>Bullet</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
     <build>
